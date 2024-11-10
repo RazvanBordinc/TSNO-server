@@ -53,6 +53,28 @@ namespace TSNO.Controllers
 
             return Ok(new { Message = "Note added successfully!", addNote });
         }
+        [HttpGet("view-note")]
+        public async Task<IActionResult> ViewNote([FromQuery] ViewDTO viewDto)
+        {
+            if (viewDto == null || string.IsNullOrWhiteSpace(viewDto.Code))
+            {
+                return BadRequest("Code is required.");
+            }
+
+            if (!int.TryParse(viewDto.Code, out int parsedCode) || parsedCode < 0 || parsedCode > 9999)
+            {
+                return BadRequest("Invalid code format.");
+            }
+
+            var note = await _dbContext.Entities.FirstOrDefaultAsync(e => e.Code == parsedCode);
+
+            if (note == null)
+            {
+                return NotFound("Note with the specified code does not exist.");
+            }
+
+            return Ok(new { Id = note.Id, Notes = note.Notes });
+        }
 
     }
 }
