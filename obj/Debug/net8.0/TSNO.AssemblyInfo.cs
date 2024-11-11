@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TSNO")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fe630299fa1ad80c137a00beff571ba89f0952ea")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6f7e08dd31ab7071f3b8ac549365f9b0b8ffad56")]
 [assembly: System.Reflection.AssemblyProductAttribute("TSNO")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TSNO")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
