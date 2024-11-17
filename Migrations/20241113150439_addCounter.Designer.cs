@@ -12,8 +12,8 @@ using TSNO.Data;
 namespace TSNO.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241111130853_counting notes added")]
-    partial class countingnotesadded
+    [Migration("20241113150439_addCounter")]
+    partial class addCounter
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

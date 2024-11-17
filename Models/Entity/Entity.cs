@@ -14,13 +14,8 @@ namespace TSNO.Models
 
         [Range(0, 9999)]
         public int Code { get; set; }
-
+        public bool DeleteWhenOpen {  get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        [NotMapped]
-        public static int TotalNotes { get; set; }
-
-        [NotMapped]
-        public static int ActiveNotes { get; set; }
     }
 }

@@ -21,23 +21,24 @@ namespace TSNO.Controllers
             _expirationService = expirationService;
         }
         [HttpGet("view-stats")]
-        public IActionResult ViewStats()
+        public async Task<IActionResult> ViewStats()
         {
+            var stats = await _dbContext.Stats.FirstAsync();
             return Ok(new List<StatsDTO>
-            {
+    {
                 new StatsDTO
                 {
                     Title = "Total Messages Transferred",
-                    Value = Entity.TotalNotes
+                    Value = stats.TotalNotes
                 },
                 new StatsDTO
                 {
                     Title = "Active Messages Transferred",
-                    Value = Entity.ActiveNotes
+                    Value = stats.ActiveNotes
                 }
-      
             });
         }
+
 
 
         [HttpPost("add-note")]
@@ -71,13 +72,18 @@ namespace TSNO.Controllers
             await _dbContext.Entities.AddAsync(addNote);
             await _dbContext.SaveChangesAsync();
 
-            // Update counters
-            Entity.TotalNotes++;
-            Entity.ActiveNotes = await _dbContext.Entities
-                                                 .CountAsync(e => (DateTime.UtcNow - e.CreatedAt).TotalMinutes < 5);
+            // Update Stats in the database
+            var stats = await _dbContext.Stats.FirstAsync();
+            stats.TotalNotes++;
+            stats.ActiveNotes = await _dbContext.Entities
+                                                .CountAsync(e => e.CreatedAt > DateTime.UtcNow.AddMinutes(-5));
+            await _dbContext.SaveChangesAsync();
 
+            addNote.Notes = "";
             return Ok(new { Message = "Note added successfully!", addNote });
         }
+
+
 
         [HttpGet("view-note")]
         public async Task<IActionResult> ViewNote([FromQuery] ViewDTO viewDto)
@@ -98,7 +104,11 @@ namespace TSNO.Controllers
             {
                 return NotFound("Note with the specified code does not exist.");
             }
-
+            if (note.DeleteWhenOpen == true)
+            {
+                _dbContext.Remove(note);
+                await _dbContext.SaveChangesAsync();
+            }
             return Ok(new { Id = note.Id, Notes = note.Notes }); //here I had to choose between deleting the note either on background in backend or frontend returning the Id, the safe way would be doing in background, but that should be done only if the client want the note to self destruct on view
         }
 

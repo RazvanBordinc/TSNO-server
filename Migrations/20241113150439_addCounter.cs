@@ -5,7 +5,7 @@
 namespace TSNO.Migrations
 {
     /// <inheritdoc />
-    public partial class countingnotesadded : Migration
+    public partial class addCounter : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

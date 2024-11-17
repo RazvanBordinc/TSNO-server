@@ -6,6 +6,7 @@ namespace TSNO.Models.ResponseDTO
     {
         [MaxLength(10000)]
         public string Notes { get; set; } = string.Empty;
+        public bool DeleteWhenOpen { get; set; } = false;
 
     }
 }

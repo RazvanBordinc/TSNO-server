@@ -24,20 +24,26 @@ namespace TSNO.Services.Expiration
 
         public async Task DeleteExpiredEntitiesAsync()
         {
+            var expirationThreshold = DateTime.UtcNow.AddMinutes(-5);
+
             var expiredEntities = await _context.Entities
-                                                   .Where(e => (DateTime.UtcNow - e.CreatedAt).TotalMinutes >= 5)
-                                                   .ToListAsync();
+                                                  .Where(e => e.CreatedAt <= expirationThreshold)
+                                                  .ToListAsync();
 
             if (expiredEntities.Any())
             {
                 _context.Entities.RemoveRange(expiredEntities);
                 await _context.SaveChangesAsync();
 
-                // Recalculate active notes after deletion
-                Entity.ActiveNotes = await _context.Entities
-                                                     .CountAsync(e => (DateTime.UtcNow - e.CreatedAt).TotalMinutes < 5);
+                // Update ActiveNotes in Stats
+                var stats = await _context.Stats.FirstAsync();
+                stats.ActiveNotes = await _context.Entities
+                                                    .CountAsync(e => e.CreatedAt > expirationThreshold);
+                await _context.SaveChangesAsync();
             }
         }
+
+
 
 
     }
