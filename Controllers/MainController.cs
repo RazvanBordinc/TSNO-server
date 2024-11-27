@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using TSNO.Data;
 using TSNO.Models;
@@ -10,6 +11,7 @@ namespace TSNO.Controllers
 {
     [ApiController]
     [Route("api")]
+    [EnableRateLimiting("FixedPolicy")]
     public class MainController : ControllerBase
     {
         private readonly ApplicationDbContext _dbContext;
@@ -65,7 +67,8 @@ namespace TSNO.Controllers
             var addNote = new Entity
             {
                 Code = generatedCode,
-                Notes = newNote.Notes
+                Notes = newNote.Notes,
+                DeleteWhenOpen = newNote.DeleteWhenOpen,
             };
 
             // Save the note to the database
