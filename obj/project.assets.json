@@ -4447,11 +4447,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\razva\\OneDrive\\Desktop\\TSNO-server\\TSNO\\TSNO\\TSNO.csproj",
+      "projectUniqueName": "C:\\Users\\razva\\OneDrive\\Desktop\\TSNO\\TSNO-server\\TSNO\\TSNO.csproj",
       "projectName": "TSNO",
-      "projectPath": "C:\\Users\\razva\\OneDrive\\Desktop\\TSNO-server\\TSNO\\TSNO\\TSNO.csproj",
+      "projectPath": "C:\\Users\\razva\\OneDrive\\Desktop\\TSNO\\TSNO-server\\TSNO\\TSNO.csproj",
       "packagesPath": "C:\\Users\\razva\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\razva\\OneDrive\\Desktop\\TSNO-server\\TSNO\\TSNO\\obj\\",
+      "outputPath": "C:\\Users\\razva\\OneDrive\\Desktop\\TSNO\\TSNO-server\\TSNO\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\razva\\AppData\\Roaming\\NuGet\\NuGet.Config",

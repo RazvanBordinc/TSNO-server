@@ -51,7 +51,7 @@ namespace TSNO.Controllers
                 return BadRequest("Note content is required.");
             }
 
-            // Fetch existing codes and available codes
+  
             var existingCodes = new HashSet<int>(await _dbContext.Entities.Select(e => e.Code).ToListAsync());
             var availableCodes = Enumerable.Range(0, 10000).Where(code => !existingCodes.Contains(code)).ToList();
 
@@ -63,19 +63,17 @@ namespace TSNO.Controllers
             var random = new Random();
             var generatedCode = availableCodes[random.Next(availableCodes.Count)];
 
-            // Create the new note entity
+   
             var addNote = new Entity
             {
                 Code = generatedCode,
                 Notes = newNote.Notes,
                 DeleteWhenOpen = newNote.DeleteWhenOpen,
             };
-
-            // Save the note to the database
+ 
             await _dbContext.Entities.AddAsync(addNote);
             await _dbContext.SaveChangesAsync();
-
-            // Update Stats in the database
+ 
             var stats = await _dbContext.Stats.FirstAsync();
             stats.TotalNotes++;
             stats.ActiveNotes = await _dbContext.Entities
@@ -113,6 +111,11 @@ namespace TSNO.Controllers
                 await _dbContext.SaveChangesAsync();
             }
             return Ok(new { Id = note.Id, Notes = note.Notes }); //here I had to choose between deleting the note either on background in backend or frontend returning the Id, the safe way would be doing in background, but that should be done only if the client want the note to self destruct on view
+        }
+        [HttpGet("healthz")]
+        public async Task<IActionResult> Healthz()
+        {
+            return Ok("everything works fine");
         }
 
     }
