@@ -1,0 +1,24 @@
+# Ignore node_modules (if present)
+node_modules
+
+# Ignore .NET build directories
+bin/
+obj/
+
+# Git metadata
+.git
+.gitignore
+
+# Docker-related files
+.dockerignore
+Dockerfile
+
+# Environment files (if sensitive)
+.env
+.env.*
+
+# Logs and temporary files
+*.log
+*.tmp
+.vscode/
+.idea/
